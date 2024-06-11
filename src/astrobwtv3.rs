@@ -119,16 +119,16 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             2 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
             3 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
@@ -139,24 +139,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             5 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             6 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = !tmp;                                            // binary NOT operator
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
@@ -165,10 +165,10 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             7 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             8 => {
@@ -184,8 +184,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
             }
@@ -193,7 +193,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
@@ -210,10 +210,10 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             12 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             13 => {
@@ -221,24 +221,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             14 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
             15 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -246,36 +246,36 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             16 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             17 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             18 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             19 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -293,17 +293,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             22 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             23 => {
@@ -311,35 +311,35 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             24 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             25 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             26 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             27 => {
@@ -347,25 +347,25 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             28 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             29 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -373,7 +373,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
@@ -382,15 +382,15 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             32 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
@@ -399,8 +399,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             33 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
@@ -408,71 +408,71 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             34 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             35 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = !tmp;                                            // binary NOT operator
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             36 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             37 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             38 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
             }
             39 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             40 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             41 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -482,7 +482,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
             }
@@ -490,7 +490,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -498,8 +498,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             44 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
@@ -516,8 +516,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             46 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -534,17 +534,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             48 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = !tmp;                                            // binary NOT operator
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             49 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -554,24 +554,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             51 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             52 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = !tmp;                                            // binary NOT operator
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
@@ -579,9 +579,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             53 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
             }
@@ -591,41 +591,41 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             55 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             56 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             57 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             58 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
@@ -634,9 +634,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             60 => {
@@ -644,17 +644,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             61 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             62 => {
@@ -662,7 +662,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -670,8 +670,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -680,7 +680,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
@@ -689,26 +689,26 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             66 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             67 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             68 => {
@@ -716,15 +716,15 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             69 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
@@ -733,8 +733,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
             }
@@ -743,7 +743,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
@@ -751,7 +751,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
@@ -759,7 +759,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             73 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
@@ -768,17 +768,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             74 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             75 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -786,8 +786,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             76 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
@@ -796,44 +796,44 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
             78 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             79 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             80 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             81 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
@@ -849,62 +849,62 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             83 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             84 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
             85 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
             86 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             87 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
             88 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             89 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = !tmp;                                            // binary NOT operator
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
@@ -921,26 +921,26 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             91 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             92 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             93 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
@@ -949,7 +949,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
@@ -960,41 +960,41 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = !tmp;                                            // binary NOT operator
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             96 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             97 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             98 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
             }
             99 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
@@ -1002,8 +1002,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             100 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
@@ -1011,19 +1011,19 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             101 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             102 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             103 => {
@@ -1039,7 +1039,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
@@ -1047,9 +1047,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             105 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
             }
@@ -1057,7 +1057,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
@@ -1065,10 +1065,10 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             107 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             108 => {
@@ -1083,8 +1083,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             109 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
@@ -1092,18 +1092,18 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             110 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             111 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
@@ -1121,8 +1121,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             114 => {
@@ -1130,17 +1130,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             115 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             116 => {
@@ -1148,60 +1148,60 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
             117 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             118 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             119 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             120 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             121 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             122 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
@@ -1212,24 +1212,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     tmp = tmp & data[pos2 as usize];                       // AND
                     tmp = !tmp;                                            // binary NOT operator
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             124 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             125 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
@@ -1239,41 +1239,41 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             127 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             128 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             129 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             130 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -1281,9 +1281,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             131 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
@@ -1301,7 +1301,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
@@ -1309,34 +1309,34 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             135 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             136 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             137 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
@@ -1346,7 +1346,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
@@ -1355,25 +1355,25 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             140 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             141 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -1391,15 +1391,15 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
             144 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = !tmp;                                            // binary NOT operator
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
@@ -1408,8 +1408,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
             }
@@ -1417,7 +1417,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
@@ -1426,8 +1426,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
@@ -1436,7 +1436,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
@@ -1445,34 +1445,34 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
             150 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             151 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
             152 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
             }
@@ -1483,7 +1483,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     // TODO !tmp two time = tmp
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             154 => {
@@ -1498,55 +1498,55 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             155 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             156 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             157 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             158 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             159 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             160 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             161 => {
@@ -1561,36 +1561,36 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             162 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             163 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             164 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             165 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -1598,9 +1598,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             167 => {
@@ -1608,34 +1608,34 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             168 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             169 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             170 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
@@ -1643,26 +1643,26 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             172 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             173 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -1670,8 +1670,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
@@ -1679,52 +1679,52 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             176 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             177 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             178 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             179 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             180 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -1733,9 +1733,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             182 => {
@@ -1750,26 +1750,26 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             183 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             184 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             185 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
@@ -1777,9 +1777,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             186 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
@@ -1788,16 +1788,16 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             188 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
             }
@@ -1805,7 +1805,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -1814,7 +1814,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
@@ -1822,18 +1822,18 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             191 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             192 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
@@ -1841,25 +1841,25 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             194 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             195 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -1869,53 +1869,53 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             197 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             198 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             199 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             200 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             201 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             202 => {
@@ -1923,8 +1923,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             203 => {
@@ -1940,24 +1940,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             205 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
             206 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
@@ -1968,17 +1968,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
             208 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             209 => {
@@ -1986,42 +1986,42 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             210 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             211 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
             }
             212 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             213 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -2030,9 +2030,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             215 => {
@@ -2040,24 +2040,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
             }
             216 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             217 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
@@ -2067,24 +2067,24 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             219 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             220 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
@@ -2095,14 +2095,14 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     tmp = !tmp;                                            // binary NOT operator
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             222 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
                     data[i as usize] = tmp.wrapping_mul(tmp);              // *
                 }
@@ -2112,14 +2112,14 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
             }
             224 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
@@ -2129,35 +2129,35 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             226 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             227 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             228 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
@@ -2165,17 +2165,17 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
             }
             230 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
             }
@@ -2183,25 +2183,25 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.reverse_bits();                              // reverse bits
+                    data[i as usize] = tmp.reverse_bits();                 // reverse bits
                 }
             }
             232 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             233 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp ^ tmp.count_ones() as u8;       // ones count bits
                 }
@@ -2210,25 +2210,25 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             235 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp.wrapping_mul(tmp);              // *
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp.wrapping_mul(tmp);                           // *
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             236 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -2237,16 +2237,16 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
             238 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
                     data[i as usize] = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
                 }
@@ -2256,15 +2256,15 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_mul(tmp);              // *
-                    data[i as usize] = tmp & data[pos2 as usize];                       // AND
+                    tmp = tmp.wrapping_mul(tmp);                           // *
+                    data[i as usize] = tmp & data[pos2 as usize];          // AND
                 }
             }
             240 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp & data[pos2 as usize];                       // AND
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
@@ -2272,54 +2272,54 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             241 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             242 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    data[i as usize] = tmp ^ data[pos2 as usize];                       // XOR
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    data[i as usize] = tmp ^ data[pos2 as usize];          // XOR
                 }
             }
             243 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp.rotate_left(1);                              // rotate bits by 1
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp.rotate_left(1);                 // rotate bits by 1
                 }
             }
             244 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             245 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                 }
             }
             246 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
+                    tmp = tmp.wrapping_add(tmp);                           // +
                     tmp = tmp.rotate_left(1);                              // rotate bits by 1
-                    tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
+                    tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
                     data[i as usize] = tmp.wrapping_add(tmp);              // +
                 }
             }
@@ -2327,26 +2327,26 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp.rotate_left(5);                              // rotate bits by 5
-                    data[i as usize] = !tmp;                                            // binary NOT operator
+                    data[i as usize] = !tmp;                               // binary NOT operator
                 }
             }
             248 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = !tmp;                                            // binary NOT operator
-                    tmp = tmp.wrapping_sub(tmp ^ 97);         // XOR and -
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
-                    data[i as usize] = tmp.rotate_left(5);                              // rotate bits by 5
+                    tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                    data[i as usize] = tmp.rotate_left(5);                 // rotate bits by 5
                 }
             }
             249 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
                     data[i as usize] = tmp.rotate_left(tmp as u32);        // rotate bits by random
                 }
             }
@@ -2354,16 +2354,16 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp & data[pos2 as usize];                       // AND
-                    tmp = tmp.rotate_left(tmp as u32);        // rotate bits by random
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     data[i as usize] = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
                 }
             }
             251 => {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp.wrapping_add(tmp);              // +
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp.wrapping_add(tmp);                           // +
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.reverse_bits();                              // reverse bits
                     data[i as usize] = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
                 }
@@ -2372,8 +2372,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.reverse_bits();                              // reverse bits
-                    tmp = tmp ^ tmp.rotate_left(4);           // rotate bits by 4
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     data[i as usize] = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                 }
             }
@@ -2381,9 +2381,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
                     tmp = tmp ^ data[pos2 as usize];                       // XOR
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
 
                     // More deviations.
                     prev_lhash = prev_lhash.wrapping_add(lhash);
@@ -2397,10 +2397,10 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
                 for i in pos1..pos2 {
                     let mut tmp = data[i as usize];
-                    tmp = tmp ^ tmp.count_ones() as u8;       // ones count bits
+                    tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
                     tmp = tmp.rotate_left(3);                              // rotate bits by 3
-                    tmp = tmp ^ tmp.rotate_left(2);           // rotate bits by 2
-                    data[i as usize] = tmp.rotate_left(3);                              // rotate bits by 3
+                    tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                    data[i as usize] = tmp.rotate_left(3);                 // rotate bits by 3
                 }
             }
         }
