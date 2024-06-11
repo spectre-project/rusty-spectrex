@@ -2459,13 +2459,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
         // Little and big endian.
         if cfg!(target_endian = "little") {
-            for byte in vector.to_le_bytes(){
-                scratch_sa_bytes.push(byte);
-            }
+            scratch_sa_bytes.extend_from_slice(&vector.to_le_bytes());
         } else {
-            for byte in vector.to_be_bytes(){
-                scratch_sa_bytes.push(byte);
-            }
+            scratch_sa_bytes.extend_from_slice(&vector.to_be_bytes());
         }
     }
 
