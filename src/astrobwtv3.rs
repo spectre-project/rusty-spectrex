@@ -2405,8 +2405,12 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             }
         }
 
+        let dp1 = data[pos1 as usize];
+        let dp2 = data[pos2 as usize];
+        let dp_minus = dp1.wrapping_sub(dp2);
+
         // 6.25 % probability.
-        if data[pos1 as usize].wrapping_sub(data[pos2 as usize]) < 0x10 {
+        if dp_minus < 0x10 {
 
             // More deviations.
             prev_lhash = prev_lhash.wrapping_add(lhash);
@@ -2414,7 +2418,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
         }
 
         // 12.5 % probability.
-        if data[pos1 as usize].wrapping_sub(data[pos2 as usize]) < 0x20 {
+        if dp_minus < 0x20 {
 
             // More deviations.
             prev_lhash = prev_lhash.wrapping_add(lhash);
@@ -2422,7 +2426,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
         }
 
         // 18.75 % probability.
-        if data[pos1 as usize].wrapping_sub(data[pos2 as usize]) < 0x30 {
+        if dp_minus < 0x30 {
 
             // More deviations.
             prev_lhash = prev_lhash.wrapping_add(lhash);
@@ -2430,7 +2434,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
         }
 
         // 25% probablility.
-        if data[pos1 as usize].wrapping_sub(data[pos2 as usize]) <= 0x40 {
+        if dp_minus <= 0x40 {
 
             // Do the rc4.
             stream = data.to_vec();
@@ -2438,7 +2442,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             data.copy_from_slice(&stream);
         }
 
-        data[255] = data[255] ^ data[pos1 as usize] ^ data[pos2 as usize];
+        data[255] ^= data[pos1 as usize] ^ data[pos2 as usize];
 
         // Copy all the tmp states.
         scratch_data[((tries - 1) * 256) as usize..(tries * 256) as usize].copy_from_slice(&data);
