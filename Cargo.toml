@@ -1,6 +1,6 @@
 [package]
 name = "spectrex"
-version = "0.3.15"
+version = "0.3.16"
 edition = "2021"
 authors = ["Spectre developers"]
 repository = "https://github.com/spectre-project/rusty-spectrex"
