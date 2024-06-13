@@ -8,7 +8,7 @@ use sha2::Digest;
 use sha2::Sha256;
 use siphasher::sip::SipHasher24;
 use std::hash::Hasher;
-use psacak::psacak;
+use suffix_array::SuffixArray;
 
 // This is the maximum.
 const MAX_LENGTH: u32 = (256 * 384) - 1;
@@ -2457,9 +2457,9 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
     let data_len = (tries - 4) as u32 * 256 + (((data[253] as u64) << 8 | (data[254] as u64)) as u32 & 0x3ff);
 
     // Step 6: build our suffix array.
-    let scratch_sa = psacak(&scratch_data[..data_len as usize]);
+    let scratch_sa = SuffixArray::new(&scratch_data[..data_len as usize]);
     let mut scratch_sa_bytes: Vec<u8> = vec![];
-    for vector in &scratch_sa {
+    for vector in &scratch_sa.into_parts().1[1..(data_len as usize + 1)] {
 
         // Little and big endian.
         if cfg!(target_endian = "little") {

@@ -13,11 +13,11 @@ homepage = "https://spectre-network.org"
 
 [dependencies]
 fnv = "1.0.7"
-psacak = "0.1.0"
 rc4 = "0.1.0"
 salsa20 = "0.10.2"
 sha2 = "0.10.8"
 siphasher = "1.0.1"
+suffix_array = "0.5.0"
 xxhash-rust = { version = "0.8.10", features = ["xxh64"] }
 
 [dev-dependencies]

@@ -34,13 +34,16 @@ The original algorithm utilized the [SA-IS](https://en.wikipedia.org/wiki/Suffix
 sorting algorithm. There exists an enhanced one with [SACA-K](https://www.sciencedirect.com/science/article/abs/pii/S0020019016301375)
 for induced sorting, improving the linear-time complexity to be
 in-place for constant alphabets. However, this remains a single-core
-variant. Our AstroBWTv3 implementation has switched to
-[pSACAK](https://ieeexplore.ieee.org/document/8371211), a fast
-linear-time, in-place parallel algorithm that leverages multi-core
-machines. It is fully compatible with the original AstroBWTv3 Suffix
-Array.
+variant. The [pSACAK](https://ieeexplore.ieee.org/document/8371211)
+algorithm offers a fast, linear-time, in-place parallel solution that
+utilizes multi-core machines. However, testing revealed that it still
+requires optimization. It is fully compatible with the original
+AstroBWTv3 Suffix Array.
 
-There are still numerous opportunities to enhance the computation of
+Our AstroBWTv3 implementation is using `cdivsufsort` as it is still
+the fastest single threaded Suffix Array construction implementation.
+
+There are numerous opportunities to enhance the computation of
 AstroBWTv3 hashes, including:
 
 * Replacing most steps with highly optimized inline assembler code on
