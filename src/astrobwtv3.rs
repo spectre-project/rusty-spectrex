@@ -2,8 +2,8 @@
 use rc4::KeyInit;
 use rc4::Rc4;
 use rc4::StreamCipher;
-use salsa20::Salsa20;
 use salsa20::cipher::KeyIvInit;
+use salsa20::Salsa20;
 use sha2::Digest;
 use sha2::Sha256;
 use siphasher::sip::SipHasher24;
@@ -46,7 +46,7 @@ const BRANCH_TABLE: [u32; 256] = [
     0x0C0B0D06, 0x0407080D, 0x08010203, 0x04060105, 0x00070009, 0x0D0A0C09, 0x02050A0A, 0x0D070308,
     0x02020E0F, 0x0B090D09, 0x05020703, 0x0C020D04, 0x03000501, 0x0F060C0D, 0x00000D01, 0x0F0B0205,
     0x04000506, 0x0E09030B, 0x00000103, 0x0F0C090B, 0x040C080F, 0x010F0C07, 0x000B0700, 0x0F0C0F04,
-    0x0401090F, 0x080E0E0A, 0x050A090E, 0x0009080C, 0x080E0C06, 0x0D0C030D, 0x090D0C0D, 0x090D0C0D
+    0x0401090F, 0x080E0E0A, 0x050A090E, 0x0009080C, 0x080E0C06, 0x0D0C030D, 0x090D0C0D, 0x090D0C0D,
 ];
 
 // Calculate and return sha256 hash.
@@ -90,7 +90,6 @@ fn sip24_calc(input: &[u8], k0: u64, k1: u64) -> u64 {
 
 // The AstroBWTv3 calculation.
 pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
-
     // Step 1+2: calculate sha256 and expand data using Salsa20.
     let mut data: [u8; 256] = salsa20_calc(&(sha256_calc(input)));
 
@@ -129,7 +128,6 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
         let opcode = BRANCH_TABLE[branch as usize];
         if branch == 254 || branch == 255 {
-
             // Use a new key.
             rc4 = Rc4::new(&data.into());
         }
@@ -139,63 +137,61 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 let op = (opcode >> (j * 8)) & 0xFF;
                 match op {
                     0x00 => {
-                        tmp = tmp.wrapping_add(tmp);                           // +
+                        tmp = tmp.wrapping_add(tmp); // +
                     }
                     0x01 => {
-                        tmp = tmp.wrapping_sub(tmp ^ 97);                      // XOR and -
+                        tmp = tmp.wrapping_sub(tmp ^ 97); // XOR and -
                     }
                     0x02 => {
-                        tmp = tmp.wrapping_mul(tmp);                           // *
+                        tmp = tmp.wrapping_mul(tmp); // *
                     }
                     0x03 => {
-                        tmp = tmp ^ data[pos2 as usize];                       // XOR
+                        tmp = tmp ^ data[pos2 as usize]; // XOR
                     }
                     0x04 => {
-                        tmp = !tmp;                                            // binary NOT operator
+                        tmp = !tmp; // binary NOT operator
                     }
                     0x05 => {
-                        tmp = tmp & data[pos2 as usize];                       // AND
+                        tmp = tmp & data[pos2 as usize]; // AND
                     }
                     0x06 => {
-                        tmp = tmp.wrapping_shl((tmp & 3) as u32);              // shift left
+                        tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
                     }
                     0x07 => {
-                        tmp = tmp.wrapping_shr((tmp & 3) as u32);              // shift right
+                        tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
                     }
                     0x08 => {
-                        tmp = tmp.reverse_bits();                              // reverse bits
+                        tmp = tmp.reverse_bits(); // reverse bits
                     }
                     0x09 => {
-                        tmp = tmp ^ tmp.count_ones() as u8;                    // ones count bits
+                        tmp = tmp ^ tmp.count_ones() as u8; // ones count bits
                     }
                     0x0A => {
-                        tmp = tmp.rotate_left(tmp as u32);                     // rotate bits by random
+                        tmp = tmp.rotate_left(tmp as u32); // rotate bits by random
                     }
                     0x0B => {
-                        tmp = tmp.rotate_left(1);                              // rotate bits by 1
+                        tmp = tmp.rotate_left(1); // rotate bits by 1
                     }
                     0x0C => {
-                        tmp = tmp ^ tmp.rotate_left(2);                        // rotate bits by 2
+                        tmp = tmp ^ tmp.rotate_left(2); // rotate bits by 2
                     }
                     0x0D => {
-                        tmp = tmp.rotate_left(3);                              // rotate bits by 3
+                        tmp = tmp.rotate_left(3); // rotate bits by 3
                     }
                     0x0E => {
-                        tmp = tmp ^ tmp.rotate_left(4);                        // rotate bits by 4
+                        tmp = tmp ^ tmp.rotate_left(4); // rotate bits by 4
                     }
                     0x0F => {
-                        tmp = tmp.rotate_left(5);                              // rotate bits by 5
+                        tmp = tmp.rotate_left(5); // rotate bits by 5
                     }
                     _ => {
                         unreachable!();
                     }
                 }
-
             }
             data[i as usize] = tmp;
             if branch == 0 {
                 if (pos2 - pos1) % 2 == 1 {
-
                     // Reverse.
                     data[pos1 as usize] = data[pos1 as usize].reverse_bits();
                     data[pos2 as usize] = data[pos2 as usize].reverse_bits();
@@ -203,7 +199,6 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 }
             }
             if branch == 253 {
-
                 // More deviations.
                 prev_lhash = prev_lhash.wrapping_add(lhash);
                 lhash = xxh64_calc(&data[..pos2 as usize]);
@@ -216,7 +211,6 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
         // 6.25 % probability.
         if dp_minus < 0x10 {
-
             // More deviations.
             prev_lhash = prev_lhash.wrapping_add(lhash);
             lhash = xxh64_calc(&data[..pos2 as usize]);
@@ -224,7 +218,6 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
         // 12.5 % probability.
         if dp_minus < 0x20 {
-
             // More deviations.
             prev_lhash = prev_lhash.wrapping_add(lhash);
             lhash = fnv1a_calc(&data[..pos2 as usize]);
@@ -232,7 +225,6 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
         // 18.75 % probability.
         if dp_minus < 0x30 {
-
             // More deviations.
             prev_lhash = prev_lhash.wrapping_add(lhash);
             lhash = sip24_calc(&data[..pos2 as usize], tries, prev_lhash);
@@ -240,7 +232,6 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
         // 25% probablility.
         if dp_minus <= 0x40 {
-
             // Do the rc4.
             stream = data.to_vec();
             rc4.apply_keystream(&mut stream);
@@ -253,19 +244,19 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
         scratch_data[((tries - 1) * 256) as usize..(tries * 256) as usize].copy_from_slice(&data);
 
         // Keep looping until condition is satisfied.
-        if tries > 260+16 || (data[255] >= 0xf0 && tries > 260) {
+        if tries > 260 + 16 || (data[255] >= 0xf0 && tries > 260) {
             break;
         }
     }
 
     // We may discard up to ~ 1KiB data from the stream to ensure that wide number of variants exists.
-    let data_len = (tries - 4) as u32 * 256 + (((data[253] as u64) << 8 | (data[254] as u64)) as u32 & 0x3ff);
+    let data_len =
+        (tries - 4) as u32 * 256 + (((data[253] as u64) << 8 | (data[254] as u64)) as u32 & 0x3ff);
 
     // Step 6: build our suffix array.
     let scratch_sa = SuffixArray::new(&scratch_data[..data_len as usize]);
     let mut scratch_sa_bytes: Vec<u8> = vec![];
     for vector in &scratch_sa.into_parts().1[1..(data_len as usize + 1)] {
-
         // Little and big endian.
         if cfg!(target_endian = "little") {
             scratch_sa_bytes.extend_from_slice(&vector.to_le_bytes());

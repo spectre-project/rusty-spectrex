@@ -15,9 +15,5 @@ fn criterion_benchmark(c: &mut Criterion) {
     c.bench_function("astrobwtv3", |b| b.iter(|| astrobwtv3_bench(&input)));
 }
 
-criterion_group!(
-    benches,
-    criterion_benchmark);
-criterion_main!(
-    benches
-);
+criterion_group!(benches, criterion_benchmark);
+criterion_main!(benches);
