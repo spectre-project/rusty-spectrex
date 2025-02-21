@@ -87,9 +87,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
     // Step 3: rc4.
     let mut rc4 = Rc4::new(&data.into());
-    let mut stream = data.to_vec();
-    rc4.apply_keystream(&mut stream);
-    data.copy_from_slice(&stream);
+    rc4.apply_keystream(&mut data);
 
     // Step 4: fnv1a.
     let mut lhash = fnv1a_calc(&data);
@@ -223,9 +221,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
         // 25% probablility.
         if dp_minus <= 0x40 {
             // Do the rc4.
-            stream = data.to_vec();
-            rc4.apply_keystream(&mut stream);
-            data.copy_from_slice(&stream);
+            rc4.apply_keystream(&mut data);
         }
 
         data[255] ^= data[pos1 as usize] ^ data[pos2 as usize];
