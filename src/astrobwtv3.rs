@@ -1,11 +1,7 @@
 // Public crates.
-use rc4::KeyInit;
-use rc4::Rc4;
-use rc4::StreamCipher;
-use salsa20::cipher::KeyIvInit;
-use salsa20::Salsa20;
-use sha2::Digest;
-use sha2::Sha256;
+use rc4::{KeyInit, Rc4, StreamCipher};
+use salsa20::{cipher::KeyIvInit, Salsa20};
+use sha2::{Digest, Sha256};
 use siphasher::sip::SipHasher24;
 use std::hash::Hasher;
 use suffix_array::SuffixArray;
