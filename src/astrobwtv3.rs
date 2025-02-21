@@ -71,21 +71,17 @@ fn salsa20_calc(key: &[u8; 32]) -> [u8; 256] {
 fn fnv1a_calc(input: &[u8]) -> u64 {
     let mut hasher = fnv::FnvHasher::default();
     hasher.write(input);
-    let output = hasher.finish();
-    output
+    hasher.finish()
 }
 
 // Calculate and return xxh64 hash.
 fn xxh64_calc(input: &[u8]) -> u64 {
-    let output = xxhash_rust::xxh64::xxh64(input, 0);
-    output
+    xxhash_rust::xxh64::xxh64(input, 0)
 }
 
 // Calculate and return sip24 hash.
 fn sip24_calc(input: &[u8], k0: u64, k1: u64) -> u64 {
-    let hasher = SipHasher24::new_with_keys(k0, k1);
-    let output = hasher.hash(input);
-    output
+    SipHasher24::new_with_keys(k0, k1).hash(input)
 }
 
 // The AstroBWTv3 calculation.
@@ -146,13 +142,13 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                         tmp = tmp.wrapping_mul(tmp); // *
                     }
                     0x03 => {
-                        tmp = tmp ^ data[pos2 as usize]; // XOR
+                        tmp ^= data[pos2 as usize]; // XOR
                     }
                     0x04 => {
                         tmp = !tmp; // binary NOT operator
                     }
                     0x05 => {
-                        tmp = tmp & data[pos2 as usize]; // AND
+                        tmp &= data[pos2 as usize]; // AND
                     }
                     0x06 => {
                         tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
@@ -190,13 +186,11 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 }
             }
             data[i as usize] = tmp;
-            if branch == 0 {
-                if (pos2 - pos1) % 2 == 1 {
-                    // Reverse.
-                    data[pos1 as usize] = data[pos1 as usize].reverse_bits();
-                    data[pos2 as usize] = data[pos2 as usize].reverse_bits();
-                    data.swap(pos1 as usize, pos2 as usize);
-                }
+            if branch == 0 && (pos2 - pos1) % 2 == 1 {
+                // Reverse.
+                data[pos1 as usize] = data[pos1 as usize].reverse_bits();
+                data[pos2 as usize] = data[pos2 as usize].reverse_bits();
+                data.swap(pos1 as usize, pos2 as usize);
             }
             if branch == 253 {
                 // More deviations.
@@ -250,8 +244,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
     }
 
     // We may discard up to ~ 1KiB data from the stream to ensure that wide number of variants exists.
-    let data_len =
-        (tries - 4) as u32 * 256 + (((data[253] as u64) << 8 | (data[254] as u64)) as u32 & 0x3ff);
+    let data_len = (tries - 4) as u32 * 256
+        + ((((data[253] as u64) << 8) | (data[254] as u64)) as u32 & 0x3ff);
 
     // Step 6: build our suffix array.
     let scratch_sa = SuffixArray::new(&scratch_data[..data_len as usize]);
