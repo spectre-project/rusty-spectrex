@@ -47,12 +47,9 @@ const BRANCH_TABLE: [u32; 256] = [
 
 // Calculate and return sha256 hash.
 fn sha256_calc(input: &[u8]) -> [u8; 32] {
-    let mut output: [u8; 32] = [0; 32];
     let mut hasher = Sha256::new();
     hasher.update(input);
-
-    output.copy_from_slice(hasher.finalize().as_slice());
-    output
+    hasher.finalize().into()
 }
 
 // Encrypt and return salsa20 stream.
