@@ -215,7 +215,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             lhash = sip24_calc(&data[..pos2 as usize], tries, prev_lhash);
         }
 
-        // 25% probablility.
+        // 25% probability.
         if dp_minus <= 0x40 {
             // Do the rc4.
             rc4.apply_keystream(&mut data);
