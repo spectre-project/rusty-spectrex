@@ -1,11 +1,7 @@
 // Public crates.
-use rc4::KeyInit;
-use rc4::Rc4;
-use rc4::StreamCipher;
-use salsa20::cipher::KeyIvInit;
-use salsa20::Salsa20;
-use sha2::Digest;
-use sha2::Sha256;
+use rc4::{KeyInit, Rc4, StreamCipher};
+use salsa20::{cipher::KeyIvInit, Salsa20};
+use sha2::{Digest, Sha256};
 use siphasher::sip::SipHasher24;
 use std::hash::Hasher;
 use suffix_array::SuffixArray;
@@ -51,12 +47,9 @@ const BRANCH_TABLE: [u32; 256] = [
 
 // Calculate and return sha256 hash.
 fn sha256_calc(input: &[u8]) -> [u8; 32] {
-    let mut output: [u8; 32] = [0; 32];
     let mut hasher = Sha256::new();
     hasher.update(input);
-
-    output.copy_from_slice(hasher.finalize().as_slice());
-    output
+    hasher.finalize().into()
 }
 
 // Encrypt and return salsa20 stream.
@@ -71,21 +64,17 @@ fn salsa20_calc(key: &[u8; 32]) -> [u8; 256] {
 fn fnv1a_calc(input: &[u8]) -> u64 {
     let mut hasher = fnv::FnvHasher::default();
     hasher.write(input);
-    let output = hasher.finish();
-    output
+    hasher.finish()
 }
 
 // Calculate and return xxh64 hash.
 fn xxh64_calc(input: &[u8]) -> u64 {
-    let output = xxhash_rust::xxh64::xxh64(input, 0);
-    output
+    xxhash_rust::xxh64::xxh64(input, 0)
 }
 
 // Calculate and return sip24 hash.
 fn sip24_calc(input: &[u8], k0: u64, k1: u64) -> u64 {
-    let hasher = SipHasher24::new_with_keys(k0, k1);
-    let output = hasher.hash(input);
-    output
+    SipHasher24::new_with_keys(k0, k1).hash(input)
 }
 
 // The AstroBWTv3 calculation.
@@ -95,9 +84,7 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
 
     // Step 3: rc4.
     let mut rc4 = Rc4::new(&data.into());
-    let mut stream = data.to_vec();
-    rc4.apply_keystream(&mut stream);
-    data.copy_from_slice(&stream);
+    rc4.apply_keystream(&mut data);
 
     // Step 4: fnv1a.
     let mut lhash = fnv1a_calc(&data);
@@ -146,13 +133,13 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                         tmp = tmp.wrapping_mul(tmp); // *
                     }
                     0x03 => {
-                        tmp = tmp ^ data[pos2 as usize]; // XOR
+                        tmp ^= data[pos2 as usize]; // XOR
                     }
                     0x04 => {
                         tmp = !tmp; // binary NOT operator
                     }
                     0x05 => {
-                        tmp = tmp & data[pos2 as usize]; // AND
+                        tmp &= data[pos2 as usize]; // AND
                     }
                     0x06 => {
                         tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
@@ -190,13 +177,11 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
                 }
             }
             data[i as usize] = tmp;
-            if branch == 0 {
-                if (pos2 - pos1) % 2 == 1 {
-                    // Reverse.
-                    data[pos1 as usize] = data[pos1 as usize].reverse_bits();
-                    data[pos2 as usize] = data[pos2 as usize].reverse_bits();
-                    data.swap(pos1 as usize, pos2 as usize);
-                }
+            if branch == 0 && (pos2 - pos1) % 2 == 1 {
+                // Reverse.
+                data[pos1 as usize] = data[pos1 as usize].reverse_bits();
+                data[pos2 as usize] = data[pos2 as usize].reverse_bits();
+                data.swap(pos1 as usize, pos2 as usize);
             }
             if branch == 253 {
                 // More deviations.
@@ -230,12 +215,10 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             lhash = sip24_calc(&data[..pos2 as usize], tries, prev_lhash);
         }
 
-        // 25% probablility.
+        // 25% probability.
         if dp_minus <= 0x40 {
             // Do the rc4.
-            stream = data.to_vec();
-            rc4.apply_keystream(&mut stream);
-            data.copy_from_slice(&stream);
+            rc4.apply_keystream(&mut data);
         }
 
         data[255] ^= data[pos1 as usize] ^ data[pos2 as usize];
@@ -250,8 +233,8 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
     }
 
     // We may discard up to ~ 1KiB data from the stream to ensure that wide number of variants exists.
-    let data_len =
-        (tries - 4) as u32 * 256 + (((data[253] as u64) << 8 | (data[254] as u64)) as u32 & 0x3ff);
+    let data_len = (tries - 4) as u32 * 256
+        + ((((data[253] as u64) << 8) | (data[254] as u64)) as u32 & 0x3ff);
 
     // Step 6: build our suffix array.
     let scratch_sa = SuffixArray::new(&scratch_data[..data_len as usize]);
