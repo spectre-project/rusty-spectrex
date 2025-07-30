@@ -10,13 +10,9 @@ fn astrobwtv3_bench(input: &[u8; 32]) {
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("astrobwtv3_zeros", |b| {
-        b.iter(|| astrobwtv3_bench(&[0; 32]))
-    });
+    c.bench_function("astrobwtv3_zeros", |b| b.iter(|| astrobwtv3_bench(&[0; 32])));
 
-    c.bench_function("astrobwtv3_ones", |b| {
-        b.iter(|| astrobwtv3_bench(&[0xFF; 32]))
-    });
+    c.bench_function("astrobwtv3_ones", |b| b.iter(|| astrobwtv3_bench(&[0xFF; 32])));
 
     c.bench_function("astrobwtv3_random", |b| {
         let random_data = random::<[u8; 32]>();

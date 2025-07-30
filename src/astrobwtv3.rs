@@ -1,15 +1,17 @@
 // Public crates.
+use cdivsufsort::sort_in_place as dss;
 use rc4::{KeyInit, Rc4, StreamCipher};
 use salsa20::{cipher::KeyIvInit, Salsa20};
 use sha2::{Digest, Sha256};
 use siphasher::sip::SipHasher24;
 use std::hash::Hasher;
-use suffix_array::SuffixArray;
+use std::slice::from_raw_parts_mut;
 
 // This is the maximum.
 const MAX_LENGTH: u32 = (256 * 384) - 1;
 
 // The base for the following code was contributed by @Wolf9466 on Discord.
+#[rustfmt::skip]
 const BRANCH_TABLE: [u32; 256] = [
     0x090F020A, 0x060B0500, 0x09080609, 0x0A0D030B, 0x04070A01, 0x09030607, 0x060D0401, 0x000A0904,
     0x040F0F06, 0x030E070C, 0x04020D02, 0x0B0F050A, 0x0C020C04, 0x0B03070F, 0x07060206, 0x0C060501,
@@ -123,57 +125,23 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
             for j in (0..=3).rev() {
                 let op = (opcode >> (j * 8)) & 0xFF;
                 match op {
-                    0x00 => {
-                        tmp = tmp.wrapping_add(tmp); // +
-                    }
-                    0x01 => {
-                        tmp = tmp.wrapping_sub(tmp ^ 97); // XOR and -
-                    }
-                    0x02 => {
-                        tmp = tmp.wrapping_mul(tmp); // *
-                    }
-                    0x03 => {
-                        tmp ^= data[pos2 as usize]; // XOR
-                    }
-                    0x04 => {
-                        tmp = !tmp; // binary NOT operator
-                    }
-                    0x05 => {
-                        tmp &= data[pos2 as usize]; // AND
-                    }
-                    0x06 => {
-                        tmp = tmp.wrapping_shl((tmp & 3) as u32); // shift left
-                    }
-                    0x07 => {
-                        tmp = tmp.wrapping_shr((tmp & 3) as u32); // shift right
-                    }
-                    0x08 => {
-                        tmp = tmp.reverse_bits(); // reverse bits
-                    }
-                    0x09 => {
-                        tmp = tmp ^ tmp.count_ones() as u8; // ones count bits
-                    }
-                    0x0A => {
-                        tmp = tmp.rotate_left(tmp as u32); // rotate bits by random
-                    }
-                    0x0B => {
-                        tmp = tmp.rotate_left(1); // rotate bits by 1
-                    }
-                    0x0C => {
-                        tmp = tmp ^ tmp.rotate_left(2); // rotate bits by 2
-                    }
-                    0x0D => {
-                        tmp = tmp.rotate_left(3); // rotate bits by 3
-                    }
-                    0x0E => {
-                        tmp = tmp ^ tmp.rotate_left(4); // rotate bits by 4
-                    }
-                    0x0F => {
-                        tmp = tmp.rotate_left(5); // rotate bits by 5
-                    }
-                    _ => {
-                        unreachable!();
-                    }
+                    0x00 => tmp = tmp.wrapping_add(tmp),              // +
+                    0x01 => tmp = tmp.wrapping_sub(tmp ^ 97),         // XOR and -
+                    0x02 => tmp = tmp.wrapping_mul(tmp),              // *
+                    0x03 => tmp ^= data[pos2 as usize],               // XOR
+                    0x04 => tmp = !tmp,                               // binary NOT operator
+                    0x05 => tmp &= data[pos2 as usize],               // AND
+                    0x06 => tmp = tmp.wrapping_shl((tmp & 3) as u32), // shift left
+                    0x07 => tmp = tmp.wrapping_shr((tmp & 3) as u32), // shift right
+                    0x08 => tmp = tmp.reverse_bits(),                 // reverse bits
+                    0x09 => tmp = tmp ^ tmp.count_ones() as u8,       // ones count bits
+                    0x0A => tmp = tmp.rotate_left(tmp as u32),        // rotate bits by random
+                    0x0B => tmp = tmp.rotate_left(1),                 // rotate bits by 1
+                    0x0C => tmp = tmp ^ tmp.rotate_left(2),           // rotate bits by 2
+                    0x0D => tmp = tmp.rotate_left(3),                 // rotate bits by 3
+                    0x0E => tmp = tmp ^ tmp.rotate_left(4),           // rotate bits by 4
+                    0x0F => tmp = tmp.rotate_left(5),                 // rotate bits by 5
+                    _ => unreachable!(),
                 }
             }
             data[i as usize] = tmp;
@@ -233,13 +201,20 @@ pub fn astrobwtv3_hash(input: &[u8]) -> [u8; 32] {
     }
 
     // We may discard up to ~ 1KiB data from the stream to ensure that wide number of variants exists.
-    let data_len = (tries - 4) as u32 * 256
-        + ((((data[253] as u64) << 8) | (data[254] as u64)) as u32 & 0x3ff);
+    let data_len = (tries - 4) as u32 * 256 + ((((data[253] as u64) << 8) | (data[254] as u64)) as u32 & 0x3ff);
 
     // Step 6: build our suffix array.
-    let scratch_sa = SuffixArray::new(&scratch_data[..data_len as usize]);
-    let mut scratch_sa_bytes: Vec<u8> = vec![];
-    for vector in &scratch_sa.into_parts().1[1..(data_len as usize + 1)] {
+    let mut sa = vec![0u32; data_len as usize + 1];
+    sa[0] = data_len;
+
+    // i32 slice for cdivsufsort
+    let sa_i32 = unsafe { from_raw_parts_mut(sa[1..].as_mut_ptr() as *mut i32, data_len as usize) };
+
+    // Build suffix array
+    dss(&scratch_data[..data_len as usize], sa_i32);
+
+    let mut scratch_sa_bytes: Vec<u8> = Vec::with_capacity(data_len as usize * 4);
+    for vector in &sa[1..(data_len as usize + 1)] {
         // Little and big endian.
         if cfg!(target_endian = "little") {
             scratch_sa_bytes.extend_from_slice(&vector.to_le_bytes());
